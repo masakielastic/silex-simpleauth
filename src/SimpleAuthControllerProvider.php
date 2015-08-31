@@ -15,10 +15,7 @@ class SimpleAuthControllerProvider implements ControllerProviderInterface
         $controllers = $app['controllers_factory'];
 
         $controllers->get('/sessions', function(Application $app, Request $request) {
-
-            $msg = $app['session']->get($this->prefix.'.login') ? 'ok' : 'fail';
-
-            return $app->json(['msg' => $msg]);
+            return $app->json(['login' => (bool) $app['session']->get($this->prefix.'.login')]);
         });
 
         $controllers->post('/sessions', function(Application $app, Request $request) {
@@ -27,34 +24,30 @@ class SimpleAuthControllerProvider implements ControllerProviderInterface
             $password = $request->get('password');
 
             if ($email === null) {
-                return $app->json(['msg' => 'fail', 'desc' => 'email が送信されていません。'], 400);
+                return $app->json(['login' => false, 'desc' => 'email が送信されていません。'], 400);
             }
 
             if ($password === null) {
-                return $app->json(['msg' => 'fail', 'desc' => 'password が送信されていません。'], 400);
+                return $app->json(['login' => false, 'desc' => 'password が送信されていません。'], 400);
             }
 
             $hash = $app['db']->fetchColumn('SELECT hash FROM user WHERE email = ?', [$email], 0);
 
             if ($hash === false || !password_verify($password, $hash)) {
-                return $app->json(['msg' => 'fail', 'desc' => 'メールアドレスもしくはパスワードが正しくありません。']);
+                return $app->json(['login' => false, 'desc' => 'メールアドレスもしくはパスワードが正しくありません。']);
             }
 
             $app['session']->migrate(true);
             $app['session']->set($this->prefix.'.login', true);
 
-            return $app->json(['msg' => 'ok']);
+            return $app->json(['login' => (bool)  $app['session']->get($this->prefix.'.login', true)]);
         });
 
         $controllers->delete('/sessions', function (Application $app, Request $request) {
 
-            if (!$app['session']->get($this->prefix.'.login')) {
-                return $app->json(['msg' => 'fail']);
-            }
-
             $app['session']->invalidate();
 
-            return $app->json(['msg' => 'ok']);
+            return $app->json(['login' => (bool) $app['session']->get($this->prefix.'.login')]);
         });
 
         return $controllers;
