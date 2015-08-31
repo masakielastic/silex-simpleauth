@@ -122,6 +122,3 @@ http --session=test GET localhost:3000/api/sessions
 --------
 
 MIT
-
-
-MIT
