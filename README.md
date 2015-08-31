@@ -6,7 +6,7 @@ SimpleAuthControllerProvider
 インストール
 ----------
 
-Composer でインストールする場合、次のコードを `package.json` に記載します。
+Composer でインストールする場合、次のコードを `package.json` に記載します。`package` 型の制約のため、一度インストールした後で、最新のリビジョンを得るには `version` の値を変更する必要があります。
 
 ```javascript
 {
@@ -15,7 +15,7 @@ Composer でインストールする場合、次のコードを `package.json` �
         "type": "package",
         "package": {
             "name": "masakielastic/silex-simpleauth",
-            "version": "master",
+            "version": "0.1",
             "type": "package",
             "source": {
                 "url": "https://github.com/masakielastic/silex-simpleauth.git",
@@ -29,8 +29,8 @@ Composer でインストールする場合、次のコードを `package.json` �
     }
     ],
     "require": {
-        "masakielastic/silex-simpleauth": "dev-master",
-        "silex/silex": "~1.3"
+        "silex/silex": "~1.3",
+        "masakielastic/silex-simpleauth": "*"
     }
 }
 ```
