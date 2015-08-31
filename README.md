@@ -15,7 +15,7 @@ Composer でインストールする場合、次のコードを `package.json` �
         "type": "package",
         "package": {
             "name": "masakielastic/silex-simpleauth",
-            "version": "0.1",
+            "version": "0.1.0",
             "type": "package",
             "source": {
                 "url": "https://github.com/masakielastic/silex-simpleauth.git",
@@ -35,11 +35,10 @@ Composer でインストールする場合、次のコードを `package.json` �
 }
 ```
 
-
 使い方
 -----
 
-Silex のコードは次のようになります。
+データベースのセットアップも兼ねた Silex のコードは次のようになります。
 
 ```php
 use Silex\Application;
