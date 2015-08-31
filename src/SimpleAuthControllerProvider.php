@@ -4,6 +4,7 @@ namespace Masakielastic\Silex;
 
 use Silex\Application;
 use Silex\ControllerProviderInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 class SimpleAuthControllerProvider implements ControllerProviderInterface
 {
